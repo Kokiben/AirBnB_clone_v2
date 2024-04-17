@@ -114,17 +114,40 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_create(self, args):
-        """ Create an object of any class"""
-        if not args:
+        """Print a new instance of BaseMode"""
+        try:
+            if not arg:
+                raise SyntaxError()
+            # Split the argument string into a list of arguments
+            mi_list = arg.split(" ")
+
+            kwrg = {}
+            for a in range(1, len(mi_list)):
+                key, value = tuple(mi_list[a].split("="))
+                # Convert value to appropriate type (int, float, or string)
+                if value[0] == '"':
+                    value = value.strip('"').replace("_", " ")
+                else:
+                    try:
+                        value = eval(value)
+                    except (SyntaxError, NameError):
+                        continue
+                kwrg[key] = value
+
+            if kwrg == {}:
+                obj = eval(mi_list[0])()
+            else:
+                obj = eval(mi_list[0])(**kwrg)
+                storage.new(obj)
+            # Print the ID of the created object 
+            print(obj.id)
+            # Save the object to file storage
+            obj.save()
+
+        except SyntaxError:
             print("** class name missing **")
-            return
-        elif args not in HBNBCommand.classes:
+        except NameError:
             print("** class doesn't exist **")
-            return
-        new_instance = HBNBCommand.classes[args]()
-        storage.save()
-        print(new_instance.id)
-        storage.save()
 
     def help_create(self):
         """ Help information for the create method """
