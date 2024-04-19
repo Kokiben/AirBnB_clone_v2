@@ -113,15 +113,15 @@ class HBNBCommand(cmd.Cmd):
         """ Overrides the emptyline method of CMD """
         pass
 
-    def do_create(self, arg):
+    def do_create(self, args):
         """Print a new instance of BaseMode"""
         try:
-            if not arg:
+            if not args:
                 raise SyntaxError()
             # Split the argument string into a list of arguments
-            mi_list = arg.split(" ")
+            mi_list = args.split(" ")
 
-            kwrg = {}
+            kwargs = {}
             for a in range(1, len(mi_list)):
                 key, value = tuple(mi_list[a].split("="))
                 # Convert value to appropriate type (int, float, or string)
@@ -132,12 +132,14 @@ class HBNBCommand(cmd.Cmd):
                         value = eval(value)
                     except (SyntaxError, NameError):
                         continue
-                kwrg[key] = value
+                kwargs[key] = value
+            if 'updated_at' not in kwargs:
+                kwargs['updated_at'] = datetime.now()
 
-            if kwrg == {}:
+            if kwargs == {}:
                 obj = eval(mi_list[0])()
             else:
-                obj = eval(mi_list[0])(**kwrg)
+                obj = eval(mi_list[0])(**kwargs)
                 storage.new(obj)
             # Print the ID of the created object 
             print(obj.id)
