@@ -133,8 +133,6 @@ class HBNBCommand(cmd.Cmd):
                     except (SyntaxError, NameError):
                         continue
                 kwargs[key] = value
-            if 'updated_at' not in kwargs:
-                kwargs['updated_at'] = datetime.now()
 
             if kwargs == {}:
                 obj = eval(mi_list[0])()
