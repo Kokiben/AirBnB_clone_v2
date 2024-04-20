@@ -1,9 +1,16 @@
 #!/usr/bin/python3
 """Print a class state that inherits from BaseModel."""
-from models.base_model import BaseModel
+import models
+import shlex
+from sqlalchemy.orm import relationship
+from models.base_model import BaseModel, Base
+from sqlalchemy.orm import relationship
+from sqlalchemy import Column, Integer, String
+from models.city import City
+from sqlalchemy.ext.declarative import declarative_base
 
 
-class State(BaseModel):
+class State(BaseModel, Base):
     """ class attribute."""
     __tablename__ = "states"
     name = Column(String(128), nullable=False)
@@ -25,5 +32,3 @@ class State(BaseModel):
             if (elm.state_id == self.id):
                 rslt.append(elm)
         return (rslt)
-
-

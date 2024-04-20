@@ -1,14 +1,16 @@
 #!/usr/bin/python3
-"""This is the place class"""
+"""Defines place class"""
+import models
+from os import getenv
+from sqlalchemy import Column, Table, String, Integer, Float, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 from models.base_model import BaseModel, Base
-from sqlalchemy import Column, Table, String, Integer, Float, ForeignKey
+from models.amenity import Amenity
+from models.review import Review
 from sqlalchemy.orm import relationship
-from os import getenv
-import models
 
 
-place_amenity = Table("place_amenity", Base.metadata,
+plc_amty = Table("place_amenity", Base.metadata,
                       Column("place_id", String(60),
                              ForeignKey("places.id"),
                              primary_key=True,
@@ -20,20 +22,7 @@ place_amenity = Table("place_amenity", Base.metadata,
 
 
 class Place(BaseModel, Base):
-    """This is the class for Place
-    Attributes:
-        city_id: city id
-        user_id: user id
-        name: name input
-        description: string of description
-        number_rooms: number of room in int
-        number_bathrooms: number of bathrooms in int
-        max_guest: maximum guest in int
-        price_by_night:: pice for a staying in int
-        latitude: latitude in flaot
-        longitude: longitude in float
-        amenity_ids: list of Amenity ids
-    """
+    """Add or replace in the class"""
     __tablename__ = "places"
     city_id = Column(String(60), ForeignKey("cities.id"), nullable=False)
     user_id = Column(String(60), ForeignKey("users.id"), nullable=False)
@@ -57,27 +46,27 @@ class Place(BaseModel, Base):
     else:
         @property
         def reviews(self):
-            """ Returns list of reviews.id """
-            var = models.storage.all()
-            lista = []
-            result = []
-            for key in var:
-                review = key.replace('.', ' ')
+            """class attribute reviews"""
+            vr = models.storage.all()
+            lst = []
+            rslt = []
+            for ky in vr:
+                review = ky.replace('.', ' ')
                 review = shlex.split(review)
                 if (review[0] == 'Review'):
-                    lista.append(var[key])
-            for elem in lista:
-                if (elem.place_id == self.id):
-                    result.append(elem)
-            return (result)
+                    lst.append(vr[ky])
+            for elmn in lst:
+                if (elmn.place_id == self.id):
+                    rslt.append(elmn)
+            return (rslt)
 
         @property
         def amenities(self):
-            """ Returns list of amenity ids """
+            """ class attribute amenity """
             return self.amenity_ids
 
         @amenities.setter
         def amenities(self, obj=None):
-            """ Appends amenity ids to the attribute """
-            if type(obj) is Amenity and obj.id not in self.amenity_ids:
+            """Amenity to attribute"""
+            if type(obj) == Amenity:
                 self.amenity_ids.append(obj.id)

@@ -1,11 +1,11 @@
 #!/usr/bin/python3
 """Print a class Review that inherits from BaseModel."""
-from models.base_model import BaseModel
+from models.base_model import BaseModel, Base
 from sqlalchemy import Column, Integer, String, ForeignKey, Float
 from sqlalchemy.ext.declarative import declarative_base
 
 
-class Review(BaseModel):
+class Review(BaseModel, Base):
     """class attributes."""
      __tablename__ = "reviews"
     text = Column(String(1024), nullable=False)
