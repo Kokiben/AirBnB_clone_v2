@@ -1,28 +1,31 @@
 #!/usr/bin/python3
-"""This module defines a base class for all models in our hbnb clone"""
+"""Defines a base class for models"""
 import uuid
 from datetime import datetime
 from sqlalchemy import Column, Integer, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
-
+import models
 
 Base = declarative_base()
 
 
 class BaseModel:
-    """A base class for all hbnb models"""
+    """Define BaseModel class"""
     id = Column(String(60), unique=True, nullable=False, primary_key=True)
     created_at = Column(DateTime, nullable=False, default=(datetime.utcnow()))
     updated_at = Column(DateTime, nullable=False, default=(datetime.utcnow()))
 
     def __init__(self, *args, **kwargs):
-        """Init a new instance with ids, timestamps, and optional attrs."""
+        """
+        Initializes BaseModel instance with a unique ID,
+        and sets creation and update times.
+        """
         if kwargs:
-            for key, value in kwargs.items():
-                if key == "created_at" or key == "updated_at":
-                    value = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
-                if key != "__class__":
-                    setattr(self, key, value)
+            for ky, val in kwargs.items():
+                if ky == "created_at" or ky == "updated_at":
+                    val = datetime.strptime(val, "%Y-%m-%dT%H:%M:%S.%f")
+                if ky != "__class__":
+                    setattr(self, ky, val)
             if "id" not in kwargs:
                 self.id = str(uuid.uuid4())
             if "created_at" not in kwargs:
@@ -55,6 +58,5 @@ class BaseModel:
         return dictionary
 
     def delete(self):
-        """ delete object
-        """
+        """Delete storage."""
         models.storage.delete(self)
