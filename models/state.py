@@ -4,8 +4,8 @@ import models
 import shlex
 from sqlalchemy.orm import relationship
 from models.base_model import BaseModel, Base
-from sqlalchemy.orm import relationship
 from sqlalchemy import Column, Integer, String
+from models import storage
 from models.city import City
 from sqlalchemy.ext.declarative import declarative_base
 
