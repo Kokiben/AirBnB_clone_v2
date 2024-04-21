@@ -18,17 +18,7 @@ class FileStorage:
 
     def all(self, cls=None):
         """Returns a dictionary of models currently in storage"""
-        cls_dict = {}
-        if cls:
-            dictionar = self.__objects
-            for ky in dictionar:
-                parti = ky.replace('.', ' ')
-                parti = shlex.split(parti)
-                if (parti[0] == cls.__name__):
-                    cls_dict[ky] = self.__objects[ky]
-            return (cls_dict)
-        else:
-            return self.__objects
+        return self.__objects
 
     def new(self, obj):
         """Adds new object to storage dictionary"""
@@ -53,13 +43,3 @@ class FileStorage:
                         self.all()[key] = classes[val['__class__']](**val)
         except FileNotFoundError:
             pass
-
-     def delete(self, obj=None):
-        """Delete obj from __objects"""
-        if obj:
-            ky = "{}.{}".format(type(obj).__name__, obj.id)
-            del self.__objects[ky]
-
-    def close(self):
-        """Call the reload"""
-        self.reload()
