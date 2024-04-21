@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """ Print class for SQLAlchemy"""
-from models.base_model import Base
+from models.base_model import BaseModel
 from models.state import State
 from models.city import City
 from models.user import User
