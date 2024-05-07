@@ -1,18 +1,18 @@
 #!/usr/bin/python3
-'''Fabric script to generate .tgz archive'''
+"""Print a Fabric script for generates a .tgz"""
 
 from fabric.api import local
 from datetime import datetime
 
 
 def do_pack():
-    '''generates .tgz archive from the contents of the web_static folder'''
+    """the web_static folder of your AirBnB Clone repo"""
     local("mkdir -p versions")
-    path = ("versions/web_static_{}.tgz"
+    ph = ("versions/web_static_{}.tgz"
             .format(datetime.strftime(datetime.now(), "%Y%m%d%H%M%S")))
-    result = local("tar -cvzf {} web_static"
-                   .format(path))
+    rst = local("tar -cvzf {} web_static"
+                   .format(ph))
 
-    if result.failed:
+    if rst.failed:
         return None
-    return path
+    return ph
