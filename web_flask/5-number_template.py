@@ -30,19 +30,13 @@ def show_py_text(text):
 
 @app.route('/number/<int:n>', strict_slashes=False)
 def sh_number(n):
-    if isinstance(n, int):
-        return '{} is a number'.format(n)
-    else:
-        return 'Not a valid number.'
+    return '{} is a number'.format(n)
 
 
 @app.route('/number_template/<int:n>', strict_slashes=False)
 def nubr_template(n):
-    if isinstance(n, int):
-        return render_template('number_template.html', number=n)
-    else:
-        return 'Not a valid number.'
+    return render_template('number_template.html', number=n)
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=5000)
