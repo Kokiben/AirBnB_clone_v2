@@ -35,13 +35,13 @@ def sh_number(n):
 
 @app.route('/number_template/<int:n>', strict_slashes=False)
 def nbr_template(n):
-    return render_template('number_template.html', number=n)
+    return render_template('6-number_odd_or_even.html', number=n)
 
 
 @app.route('/number_odd_or_even/<int:n>', strict_slashes=False)
 def nmbr_odd_or_even(n):
     odd_or_even = "even" if n % 2 == 0 else "odd"
-    return render_template('number_odd_or_even.html', number=n, odd_or_even=odd_or_even)
+    return render_template('6-number_odd_or_even.html', number=n, odd_or_even=odd_or_even)
 
 
 if __name__ == '__main__':
