@@ -16,7 +16,7 @@ def states_list():
     """Display a HTML page with a list of all State objects present in DBStorage sorted by name"""
     states = storage.all(State)
     sorted_states = sorted(states.values(), key=lambda state: state.name)
-    return render_template('states_list.html', states=sorted_states)
+    return render_template('7-states_list.html', states=sorted_states)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000)
